@@ -20,14 +20,21 @@ st.title("Interactive Chart with Plotly")
 st.write("Here is the sample data:")
 st.write(df)
 
+# Allow the user to select a chart type
+chart_type = st.selectbox("Select a chart type", options=["Line Chart", "Bar Chart"])
+
 # Allow the user to select a column to plot
 column = st.selectbox("Select a data column to plot", options=['Sales', 'Revenue', 'Profit'])
 
-# Create an interactive plot using Plotly
-fig = px.line(df, x='Date', y=column, title=f'{column} Over Time')
-
-# Show the plot
-st.plotly_chart(fig)
+# Create the interactive plot based on the selected chart type
+if chart_type == "Line Chart":
+    # Line chart
+    fig = px.line(df, x='Date', y=column, title=f'{column} Over Time')
+    st.plotly_chart(fig)
+elif chart_type == "Bar Chart":
+    # Bar chart
+    fig = px.bar(df, x='Date', y=column, title=f'{column} Over Time (Bar Chart)')
+    st.plotly_chart(fig)
 
 # Add some additional explanation
-st.write(f"Above is the line chart showing the {column} data over the days.")
+st.write(f"Above is the chart showing the {column} data over the days.")
