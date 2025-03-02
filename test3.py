@@ -23,18 +23,46 @@ st.write(df)
 # Allow the user to select a chart type
 chart_type = st.selectbox("Select a chart type", options=["Line Chart", "Bar Chart"])
 
-# Allow the user to select a column to plot
-column = st.selectbox("Select a data column to plot", options=['Sales', 'Revenue', 'Profit'])
+# Allow the user to select whether to combine all columns in one chart or not
+combine_all = st.selectbox("Combine all columns in one chart?", options=["No", "Yes"])
 
-# Create the interactive plot based on the selected chart type
-if chart_type == "Line Chart":
-    # Line chart
-    fig = px.line(df, x='Date', y=column, title=f'{column} Over Time')
+# If the user selects "Yes" for combining all columns, plot all columns together
+if combine_all == "Yes":
+    if chart_type == "Line Chart":
+        fig = px.line(df, x='Date', y=['Sales', 'Revenue', 'Profit'], title="Sales, Revenue, and Profit Over Time")
+        fig.update_traces(line=dict(width=3))
+        # Apply custom colors
+        fig.update_traces(marker=dict(color=['blue', 'green', 'red']))
+    elif chart_type == "Bar Chart":
+        fig = px.bar(df, x='Date', y=['Sales', 'Revenue', 'Profit'], title="Sales, Revenue, and Profit Over Time (Bar Chart)")
+        # Apply custom colors
+        fig.update_traces(marker=dict(color=['blue', 'green', 'red']))
     st.plotly_chart(fig)
-elif chart_type == "Bar Chart":
-    # Bar chart
-    fig = px.bar(df, x='Date', y=column, title=f'{column} Over Time (Bar Chart)')
+
+# If the user selects "No" for combining all columns, allow selection of one column to plot
+else:
+    column = st.selectbox("Select a data column to plot", options=['Sales', 'Revenue', 'Profit'])
+
+    if chart_type == "Line Chart":
+        fig = px.line(df, x='Date', y=column, title=f'{column} Over Time')
+        fig.update_traces(line=dict(width=3))
+        # Apply custom colors
+        if column == 'Sales':
+            fig.update_traces(marker=dict(color='blue'))
+        elif column == 'Revenue':
+            fig.update_traces(marker=dict(color='green'))
+        elif column == 'Profit':
+            fig.update_traces(marker=dict(color='red'))
+    elif chart_type == "Bar Chart":
+        fig = px.bar(df, x='Date', y=column, title=f'{column} Over Time (Bar Chart)')
+        # Apply custom colors
+        if column == 'Sales':
+            fig.update_traces(marker=dict(color='blue'))
+        elif column == 'Revenue':
+            fig.update_traces(marker=dict(color='green'))
+        elif column == 'Profit':
+            fig.update_traces(marker=dict(color='red'))
     st.plotly_chart(fig)
 
 # Add some additional explanation
-st.write(f"Above is the chart showing the {column} data over the days.")
+st.write(f"Above is the chart showing the {column if combine_all == 'No' else 'Sales, Revenue, and Profit'} data.")
