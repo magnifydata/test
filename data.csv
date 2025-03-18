@@ -1,11 +1,11 @@
-Name,Age,Salary,City
-Alice,25,50000,New York
-Bob,30,60000,London
-Charlie,28,55000,Paris
-David,35,70000,Tokyo
-Eve,22,45000,Sydney
-Frank,40,80000,Berlin
-Grace,27,52000,Rome
-Henry,32,65000,Madrid
-Ivy,29,58000,Amsterdam
-Jack,38,75000,Toronto
+Name,Age,Salary,City,Category
+Alice,25,50000,New York,Engineer
+Bob,30,60000,London,Manager
+Charlie,28,55000,Paris,Analyst
+David,35,70000,Tokyo,Engineer
+Eve,22,45000,Sydney,Analyst
+Frank,40,80000,Berlin,Manager
+Grace,27,52000,Rome,Engineer
+Henry,32,65000,Madrid,Manager
+Ivy,29,58000,Amsterdam,Analyst
+Jack,38,75000,Toronto,Engineer
