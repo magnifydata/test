@@ -1,5 +1,11 @@
-Name,Age,City
-Alice,25,New York
-Bob,30,London
-Charlie,28,Paris
-Shannon,15, Kuala Lumpur
+Name,Age,Salary,City
+Alice,25,50000,New York
+Bob,30,60000,London
+Charlie,28,55000,Paris
+David,35,70000,Tokyo
+Eve,22,45000,Sydney
+Frank,40,80000,Berlin
+Grace,27,52000,Rome
+Henry,32,65000,Madrid
+Ivy,29,58000,Amsterdam
+Jack,38,75000,Toronto
