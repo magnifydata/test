@@ -2,10 +2,10 @@ import streamlit as st
 import pandas as pd
 
 st.title("Hello, Streamlit!")
+st.write("This is a simple Streamlit app.")
 
-st.write("This is a very simple Streamlit app.")
-
-# Add a simple data display (using a Pandas DataFrame)
-data = {"Name": ["Alice", "Bob", "Charlie"], "Age": [25, 30, 28]}
-df = pd.DataFrame(data)  # Convert the dictionary to a DataFrame
-st.dataframe(df)  # Display the DataFrame
+try:
+    df = pd.read_csv("data.csv")  # Load the CSV file into a DataFrame
+    st.dataframe(df)
+except FileNotFoundError:
+    st.error("Error: data.csv not found.  Make sure it's in the same directory.")
