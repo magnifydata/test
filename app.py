@@ -7,10 +7,12 @@ st.write("This is a simple Streamlit app.")
 try:
     df = pd.read_csv("data.csv")
 
-    # Create a selectbox to choose a name
-    selected_name = st.selectbox("Select a Name:", df["Name"].unique())
+    # Sidebar
+    with st.sidebar:
+        st.header("Filters")
+        selected_name = st.selectbox("Select a Name:", df["Name"].unique())
 
-    # Filter the DataFrame based on the selected name
+    # Filter the DataFrame
     selected_row = df[df["Name"] == selected_name]
 
     # Display the selected row
