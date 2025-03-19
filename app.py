@@ -15,7 +15,7 @@ st.markdown(
     h1 {
         color: #2E86C1 !important; /* Steel Blue */
     }
-    h4 {
+    h2 {
         color: #1A5276 !important; /* Dark Blue */
     }
     .stDataFrame {
@@ -37,10 +37,7 @@ st.markdown(
 )
 
 # Use Markdown/HTML to style the title
-st.markdown("<h1 style='color: #2E86C1;'>Employee Data Filter</h1>", unsafe_allow_html=True)
-
-# Use Markdown/HTML to style the title in green color
-st.markdown("<h4 style='color: green;'>Employee Information</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='color: green;'>Employee Data Filter</h1>", unsafe_allow_html=True)
 
 try:
     df = pd.read_csv("data.csv")
@@ -59,6 +56,13 @@ try:
             default=df["Category"].unique(),
         )
 
+        # Multiselect widget for filtering by department
+        selected_departments = st.multiselect(
+            "Select Departments:",
+            options=df["Department"].unique(),
+            default=df["Department"].unique(),
+        )
+
         # Slider for filtering by salary (in the sidebar)
         min_salary = float(df["Salary"].min())
         max_salary = float(df["Salary"].max())
@@ -71,6 +75,7 @@ try:
 
     # Filter the DataFrame
     filtered_df = df[df["Category"].isin(selected_categories)]
+    filtered_df = filtered_df[df["Department"].isin(selected_departments)] # Added department filter
     filtered_df = filtered_df[
         (filtered_df["Salary"] >= salary_range[0]) & (filtered_df["Salary"] <= salary_range[1])
     ]
@@ -136,7 +141,7 @@ except FileNotFoundError:
     st.error("Error: data.csv not found.")
 except KeyError as e:
     st.error(
-        f"Error: Column '{e}' not found in data.csv.  Make sure 'Salary' and 'Category' columns exist."
+        f"Error: Column '{e}' not found in data.csv.  Make sure 'Salary' and 'Category' and 'Department' columns exist."
     )
 except ValueError:
     st.error(
