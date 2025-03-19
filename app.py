@@ -1,21 +1,28 @@
 import streamlit as st
 import pandas as pd
 
-st.title("Streamlit App")
+st.title("Employee Data Filter")  # Improved app title
 
 try:
     df = pd.read_csv("data.csv")
 
+    st.header("Filter Employee Information") #Added header
+
     # Multiselect widget for filtering by category
     selected_categories = st.multiselect(
-        "Select Categories:", options=df["Category"].unique(), default=df["Category"].unique()
+        "Select Employee Categories:",  # Improved label
+        options=df["Category"].unique(),
+        default=df["Category"].unique(),
     )
 
     # Slider for filtering by salary
     min_salary = float(df["Salary"].min())
     max_salary = float(df["Salary"].max())
     salary_range = st.slider(
-        "Select Salary Range:", min_value=min_salary, max_value=max_salary, value=(min_salary, max_salary)
+        "Select Salary Range ($):",  # Improved label
+        min_value=min_salary,
+        max_value=max_salary,
+        value=(min_salary, max_salary),
     )
 
     # Filter the DataFrame
@@ -26,9 +33,15 @@ try:
 
     st.dataframe(filtered_df)
 
+    st.write(f"Number of results: {len(filtered_df)}") # Display number of results
+
 except FileNotFoundError:
     st.error("Error: data.csv not found.")
 except KeyError as e:
-    st.error(f"Error: Column '{e}' not found in data.csv.  Make sure 'Salary' and 'Category' columns exist.")
+    st.error(
+        f"Error: Column '{e}' not found in data.csv.  Make sure 'Salary' and 'Category' columns exist."
+    )
 except ValueError:
-    st.error("Error: 'Salary' column contains non-numeric values. Please ensure it only contains numbers.")
+    st.error(
+        "Error: 'Salary' column contains non-numeric values. Please ensure it only contains numbers."
+    )
