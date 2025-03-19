@@ -1,12 +1,13 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px  # Import plotly
 
 st.title("Employee Data Filter")
 
 try:
     df = pd.read_csv("data.csv")
 
-    st.sidebar.header("Filter Options")  # Sidebar header
+    st.sidebar.header("Filter Options")
 
     # Multiselect widget for filtering by category (in the sidebar)
     selected_categories = st.sidebar.multiselect(
@@ -31,9 +32,28 @@ try:
         (filtered_df["Salary"] >= salary_range[0]) & (filtered_df["Salary"] <= salary_range[1])
     ]
 
-    st.header("Employee Information")  # Main area header
-    st.dataframe(filtered_df)
-    st.write(f"Number of results: {len(filtered_df)}")
+    # Calculate average salary per category for the filtered data
+    avg_salary_per_category = filtered_df.groupby("Category")["Salary"].mean().reset_index()
+
+    # Create the bar chart using plotly
+    fig = px.bar(
+        avg_salary_per_category,
+        x="Category",
+        y="Salary",
+        labels={"Category": "Employee Category", "Salary": "Average Salary ($)"},
+        title="Average Salary per Employee Category",
+    )
+
+    # Create two columns for layout
+    col1, col2 = st.columns([2, 3])  # Adjust the ratio as needed
+
+    with col1:
+        st.header("Employee Information")
+        st.dataframe(filtered_df)
+        st.write(f"Number of results: {len(filtered_df)}")
+
+    with col2:
+        st.plotly_chart(fig, use_container_width=True)  # Display the chart
 
 except FileNotFoundError:
     st.error("Error: data.csv not found.")
