@@ -28,6 +28,9 @@ st.markdown(
         font-size: 1.2em !important;
         font-weight: bold !important;
     }
+    [data-testid="stSidebar"] {
+        background-color: #D4E6F1; /* Light Blue */
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -39,7 +42,11 @@ st.markdown("<h1 style='color: #2E86C1;'>Employee Data Filter</h1>", unsafe_allo
 try:
     df = pd.read_csv("data.csv")
 
-    with st.sidebar: # Put sidebar elements in a 'with' block
+    # Calculate summary metrics
+    total_employees = len(df)
+    average_salary = df["Salary"].mean()
+
+    with st.sidebar:  # Put sidebar elements in a 'with' block
         st.header("Filter Options")
 
         # Multiselect widget for filtering by category (in the sidebar)
@@ -65,6 +72,13 @@ try:
         (filtered_df["Salary"] >= salary_range[0]) & (filtered_df["Salary"] <= salary_range[1])
     ]
 
+    # Display metrics
+    col1, col2 = st.columns(2)
+    with col1:
+        st.metric("Total Employees", total_employees)
+    with col2:
+        st.metric("Average Salary", f"${average_salary:,.2f}") #Format with commas and 2 decimals
+
     # Calculate average salary per category for the filtered data
     avg_salary_per_category = filtered_df.groupby("Category")["Salary"].mean().reset_index()
 
@@ -72,9 +86,10 @@ try:
     col1, col2 = st.columns([3, 2])  # DataFrame takes 3/5, graph takes 2/5
 
     with col1:
-        st.markdown("<h2 style='text-align: left;'>Employee Information</h2>", unsafe_allow_html=True)
-        st.dataframe(filtered_df)
-        st.write(f"Number of results: {len(filtered_df)}")
+        with st.expander("Employee Information", expanded=False): # Add expander
+            st.markdown("<h2 style='text-align: left;'>Employee Information</h2>", unsafe_allow_html=True)
+            st.dataframe(filtered_df)
+            st.write(f"Number of results: {len(filtered_df)}")
 
     with col2:
         # Chart type selector
