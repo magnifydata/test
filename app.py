@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px  # Import plotly
+import plotly.express as px
 
 st.title("Employee Data Filter")
 
@@ -44,8 +44,8 @@ try:
         title="Average Salary per Employee Category",
     )
 
-    # Create two columns for layout
-    col1, col2 = st.columns([2, 3])  # Adjust the ratio as needed
+    # Create two columns for layout (adjust the ratio)
+    col1, col2 = st.columns([3, 2])  # DataFrame takes 3/5, graph takes 2/5
 
     with col1:
         st.header("Employee Information")
@@ -53,7 +53,7 @@ try:
         st.write(f"Number of results: {len(filtered_df)}")
 
     with col2:
-        st.plotly_chart(fig, use_container_width=True)  # Display the chart
+        st.plotly_chart(fig, use_container_width=True)
 
 except FileNotFoundError:
     st.error("Error: data.csv not found.")
