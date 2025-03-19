@@ -76,9 +76,11 @@ try:
                title="Salary vs Category (Size: Age)",
            )
 
-        st.markdown("<br><br>", unsafe_allow_html=True)  # Add vertical spacing
-        with st.container(): # Enforce container width to keep chart within bounds
-             st.plotly_chart(fig, use_container_width=True)
+        # Create an empty element for spacing
+        empty_space = st.empty()
+        empty_space.markdown("<br><br><br><br><br>", unsafe_allow_html=True)  # Add vertical spacing
+
+        st.plotly_chart(fig, use_container_width=True)
 
 except FileNotFoundError:
     st.error("Error: data.csv not found.")
