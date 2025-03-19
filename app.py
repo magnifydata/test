@@ -1,25 +1,25 @@
 import streamlit as st
 import pandas as pd
 
-st.title("Employee Data Filter")  # Improved app title
+st.title("Employee Data Filter")
 
 try:
     df = pd.read_csv("data.csv")
 
-    st.header("Filter Employee Information") #Added header
+    st.sidebar.header("Filter Options")  # Sidebar header
 
-    # Multiselect widget for filtering by category
-    selected_categories = st.multiselect(
-        "Select Employee Categories:",  # Improved label
+    # Multiselect widget for filtering by category (in the sidebar)
+    selected_categories = st.sidebar.multiselect(
+        "Select Employee Categories:",
         options=df["Category"].unique(),
         default=df["Category"].unique(),
     )
 
-    # Slider for filtering by salary
+    # Slider for filtering by salary (in the sidebar)
     min_salary = float(df["Salary"].min())
     max_salary = float(df["Salary"].max())
-    salary_range = st.slider(
-        "Select Salary Range ($):",  # Improved label
+    salary_range = st.sidebar.slider(
+        "Select Salary Range ($):",
         min_value=min_salary,
         max_value=max_salary,
         value=(min_salary, max_salary),
@@ -31,9 +31,9 @@ try:
         (filtered_df["Salary"] >= salary_range[0]) & (filtered_df["Salary"] <= salary_range[1])
     ]
 
+    st.header("Employee Information")  # Main area header
     st.dataframe(filtered_df)
-
-    st.write(f"Number of results: {len(filtered_df)}") # Display number of results
+    st.write(f"Number of results: {len(filtered_df)}")
 
 except FileNotFoundError:
     st.error("Error: data.csv not found.")
