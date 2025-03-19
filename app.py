@@ -15,7 +15,7 @@ st.markdown(
     h1 {
         color: #2E86C1 !important; /* Steel Blue */
     }
-    h2 {
+    h4 {
         color: #1A5276 !important; /* Dark Blue */
     }
     .stDataFrame {
@@ -40,7 +40,7 @@ st.markdown(
 st.markdown("<h1 style='color: #2E86C1;'>Employee Data Filter</h1>", unsafe_allow_html=True)
 
 # Use Markdown/HTML to style the title in green color
-st.markdown("<h1 style='color: green;'>Employee Data Filter</h1>", unsafe_allow_html=True)
+st.markdown("<h4 style='color: green;'>Employee Information</h1>", unsafe_allow_html=True)
 
 try:
     df = pd.read_csv("data.csv")
