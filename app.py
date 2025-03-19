@@ -55,6 +55,7 @@ try:
                 y="Salary",
                 labels={"Category": "Employee Category", "Salary": "Average Salary ($)"},
                 title="Average Salary per Employee Category",
+                height=400  # Adjust height as needed
             )
         elif chart_type == "Pie Chart":
             fig = px.pie(
@@ -62,6 +63,7 @@ try:
                 values="Salary",
                 names="Category",
                 title="Average Salary per Employee Category",
+                height=400  # Adjust height as needed
             )
         elif chart_type == "Scatter Chart":
             # Add Age to scatter chart
@@ -74,12 +76,10 @@ try:
                hover_data=['Name', 'Age', 'City'],
                labels={"Category": "Employee Category", "Salary": "Salary ($)"},
                title="Salary vs Category (Size: Age)",
+               height=400 # Adjust height as needed
            )
 
-        # Create an empty element for spacing
-        empty_space = st.empty()
-        empty_space.markdown("<br><br><br><br><br>", unsafe_allow_html=True)  # Add vertical spacing
-
+        st.caption(" ")  # Add a small caption for spacing
         st.plotly_chart(fig, use_container_width=True)
 
 except FileNotFoundError:
